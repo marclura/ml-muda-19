@@ -8,6 +8,7 @@ let txt;
 let input;
 let sentences;
 let pics;
+let pic;
 
 let classifier, charRNN;
 let labels;
@@ -18,12 +19,12 @@ let senAdj = ["great", "super", "good", "very good","good","wow","cool","great",
 
 
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(0, 0);
   img = loadImage(randomPic(), onImageReady); // callback
 }
 
 function randomPic() {
-  let pic = "pics/travel" + Math.floor(Math.random()*4) + ".jpg";
+  pic = "pics/travel" + Math.floor(Math.random()*4) + ".jpg";
   console.log(pic);
   return pic;
 }
@@ -31,6 +32,8 @@ function randomPic() {
 function onImageReady() {
   classifier = ml5.imageClassifier('MobileNet', 'topk: 3', modelLoaded); // load classifier
   imageReady = true;
+  //select('#showimage').src(pic);
+  document.getElementById('showimage').src = pic;
   charRNN = ml5.charRNN('./models/woolf/', modelTextLoaded);
   
 }
