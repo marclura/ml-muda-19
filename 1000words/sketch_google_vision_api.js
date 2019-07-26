@@ -4,7 +4,7 @@ let imageReady = false;
 function setup() {
   createCanvas(400, 400);
 
-  img = loadImage("holidays.jpg", onImageReady); // callback
+  img = loadImage("pics/travel1.jpg", onImageReady); // callback
 }
 
 function onImageReady() {

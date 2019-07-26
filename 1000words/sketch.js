@@ -7,24 +7,31 @@ let textReady = false;
 let txt;
 let input;
 let sentences;
+let pics;
 
 let classifier, charRNN;
 let labels;
 
 let senStart = ["this", "the", "your"];
-let senVerb = ["is", "looks", "is truly", "is really"];
-let senAdj = ["great", "super", "good", "very good","good","wow","WOW","cool","GREAT","magnificent", "magical","very cool","stylish","beautiful","so beautiful","so stylish","so professional","lovely","so lovely","very lovely","glorious","so glorious","very glorious","adorable","excellent","amazing"];
+let senVerb = ["is"];
+let senAdj = ["great", "super", "good", "very good","good","wow","cool","great","magnificent", "magical","very cool","stylish","beautiful","so beautiful","so stylish","so professional","lovely","so lovely","very lovely","glorious","so glorious","very glorious","adorable","excellent","amazing"];
 
 
 function setup() {
   createCanvas(400, 400);
-  img = loadImage("holidays.jpg", onImageReady); // callback
+  img = loadImage(randomPic(), onImageReady); // callback
+}
+
+function randomPic() {
+  let pic = "pics/travel" + Math.floor(Math.random()*4) + ".jpg";
+  console.log(pic);
+  return pic;
 }
 
 function onImageReady() {
   classifier = ml5.imageClassifier('MobileNet', 'topk: 3', modelLoaded); // load classifier
   imageReady = true;
-  charRNN = ml5.charRNN('./models/shakespeare/', modelTextLoaded);
+  charRNN = ml5.charRNN('./models/woolf/', modelTextLoaded);
   
 }
 
@@ -51,9 +58,7 @@ function modelTextLoaded() {
 
 function generateText() {
 
-  console.log("senStart.length " + Math.floor(Math.random()*senStart.length));
-
-  input = senStart[Math.floor(Math.random()*senStart.length)] + " " + senAdj[Math.floor(Math.random()*senAdj.length)] + " " + labels[4].trim() + " " + senVerb[Math.floor(Math.random()*senVerb.length)];  // get the first label from the label array
+  input = senStart[Math.floor(Math.random()*senStart.length)] + " " + senAdj[Math.floor(Math.random()*senAdj.length)] + " " + labels[Math.floor(Math.random()*labels.length)] + " " + senVerb[Math.floor(Math.random()*senVerb.length)];  // get the first label from the label array
   //input = "the meaning of life is";
   
   console.log(input);
@@ -78,6 +83,6 @@ function gotData(err, result) {
 
 function draw() {
   if (imageReady) {
-    image(img, 0, 0, width, height/2);
+    //image(img, 0, 0, width, height/2);
   }
 }
