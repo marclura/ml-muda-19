@@ -19,7 +19,7 @@ let sentencesArray = [];  // all sentences
 
 // images reader
 let current = 0;    // current pic
-let picsNo = 3;    // total amount of pictures in the folder
+let picsNo = 10;    // total amount of pictures in the folder
 
 
 // sentences parts
@@ -39,7 +39,7 @@ function readAllPics() {
     img = loadImage("pics/" + current + ".jpg", onImageReady); // callback
   } else {
     current = 0;    // restart the counter
-    //readAllPics(); // restart with generation
+    readAllPics(); // restart with generation
   }
 
 }
@@ -115,7 +115,8 @@ function gotData(err, result) {
 
     let color = "hsl(" + Math.floor(Math.random()*360) + ", 100%, 75%)";
 
-    currSent = '<span style="background: linear-gradient(' + color + ', ' + color + ')">' + currSent + ". </span>";
+    //currSent = '<span style="background: linear-gradient(' + color + ', ' + color + ')">' + currSent + ". </span>";
+    currSent = '<span style="background: ' + color  + '">' + currSent + ". </span>";
 
     // at the beginning add new sentenses to the array beacuse still not populated
     if(sentencesArray.length < current) {
