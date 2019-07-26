@@ -61,7 +61,7 @@ function modelTextLoaded() {
 
 function generateText() {
 
-  input = senStart[Math.floor(Math.random()*senStart.length)] + " " + senAdj[Math.floor(Math.random()*senAdj.length)] + " " + labels[Math.floor(Math.random()*labels.length)] + " " + senVerb[Math.floor(Math.random()*senVerb.length)];  // get the first label from the label array
+  input = senStart[Math.floor(Math.random()*senStart.length)] + " " + senAdj[Math.floor(Math.random()*senAdj.length)] + ' <span class="label">' + labels[Math.floor(Math.random()*labels.length)] + "</span> " + senVerb[Math.floor(Math.random()*senVerb.length)];  // get the first label from the label array
   //input = "the meaning of life is";
   
   console.log(input);
