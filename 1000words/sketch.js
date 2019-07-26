@@ -9,10 +9,20 @@ let input;
 let sentences;
 let pics;
 let pic;
+let currentLabel;
 
 let classifier, charRNN;
 let labels;
 
+// data management
+let sentencesArray = [];  // all sentences
+
+// images reader
+let current = 0;    // current pic
+let picsNo = 10;    // total amount of pictures in the folder
+
+
+// sentences parts
 let senStart = ["this", "the", "your"];
 let senVerb = ["is"];
 let senAdj = ["great", "super", "good", "very good","good","wow","cool","great","magnificent", "magical","very cool","stylish","beautiful","so beautiful","so stylish","so professional","lovely","so lovely","very lovely","glorious","so glorious","very glorious","adorable","excellent","amazing"];
@@ -20,7 +30,15 @@ let senAdj = ["great", "super", "good", "very good","good","wow","cool","great",
 
 function setup() {
   createCanvas(0, 0);
-  img = loadImage(randomPic(), onImageReady); // callback
+  readAllPics();
+}
+
+function readAllPics() {
+
+  if(current < picsNo) {
+    img = loadImage("pics/" + current + ".jpg", onImageReady); // callback
+  }
+
 }
 
 function randomPic() {
@@ -32,7 +50,7 @@ function randomPic() {
 function onImageReady() {
   classifier = ml5.imageClassifier('MobileNet', 'topk: 3', modelLoaded); // load classifier
   imageReady = true;
-  //select('#showimage').src(pic);
+  
   document.getElementById('showimage').src = pic;
   charRNN = ml5.charRNN('./models/woolf/', modelTextLoaded);
   
@@ -61,7 +79,10 @@ function modelTextLoaded() {
 
 function generateText() {
 
-  input = senStart[Math.floor(Math.random()*senStart.length)] + " " + senAdj[Math.floor(Math.random()*senAdj.length)] + ' <span class="label">' + labels[Math.floor(Math.random()*labels.length)] + "</span> " + senVerb[Math.floor(Math.random()*senVerb.length)];  // get the first label from the label array
+  // small initial sentence for the model to generate the full sentence
+  currentLabel = labels[Math.floor(Math.random()*labels.length)]
+  input = senStart[Math.floor(Math.random()*senStart.length)] + " " + senAdj[Math.floor(Math.random()*senAdj.length)] + " " + currentLabel + " " + senVerb[Math.floor(Math.random()*senVerb.length)];  // get the first label from the label array
+  
   //input = "the meaning of life is";
   
   console.log(input);
@@ -69,20 +90,56 @@ function generateText() {
   let data = {
     seed: input,
     temperature: 0.5,
-    length: 400
+    length: 300
   };
   
+  // sentence generator
   charRNN.generate(data, gotData);
   
 }
 
 function gotData(err, result) {
-    txt = input + " " + result.sample;
-    console.log(txt);
-    sentences = txt.split('.');
+
+    txt = input + " " + result.sample;    // combine the initial part of the sentence with the generated one
+    
+    sentences = txt.split('.');   // split the long string text into array of sentences that ends with the '.'
     textReady = true;
-    select('#sentence').html(sentences[0] + ".");
+
+    let changedLabel = '<span class="label">' + currentLabel + "</span>";
+    let currSent = sentences[0];
+
+    currSent = currSent.replace(currentLabel, changedLabel);  // add class selector to only the label inside the sentence.
+
+    let color = "hsl(" + Math.floor(Math.random()*360) + ", 100%, 75%)";
+
+    currSent = '<span style="background: linear-gradient(' + color + ', ' + color + ')">' + currSent + ". </span>";
+
+    sentencesArray.push(currSent);
+
+    console.log(currSent);
+
+    pageUpdate();
+    
 }
+
+function pageUpdate() {
+
+  let finalHtml = "";
+
+  sentencesArray.forEach(function(element) {
+    finalHtml = finalHtml + element;
+  });
+
+  console.log(finalHtml);
+
+  select('#sentence').html(finalHtml.toLowerCase());
+
+  current += 1;
+
+  readAllPics();
+
+}
+
 
 function draw() {
   if (imageReady) {

@@ -16,17 +16,18 @@
     body {}
     h1  {text-align: left;}
     div { 
-      display:flex;
-      align-items: flex-start;
     }
-    p {margin-left:-500px;
+    span {
       text-align: left;
       color: black;
       font-size: 60px;
       font-weight: bold;
       line-height: 100%;
-      background-color:rgba(255, 255, 0, .4);
     } 
+
+    #container {
+      padding-left: 30%;
+    }
 
     .label {
       font-size: 150%;
@@ -45,7 +46,9 @@
     <div>
     <img src="" id="showimage">
     <script src="sketch.js"></script>
-    <p  id="sentence">
+    <div id="container">
+      <div id="sentence"></div>
+    </div>
   </div>
   </body>
 </html>
