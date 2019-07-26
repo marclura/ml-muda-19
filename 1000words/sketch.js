@@ -19,7 +19,7 @@ let sentencesArray = [];  // all sentences
 
 // images reader
 let current = 0;    // current pic
-let picsNo = 10;    // total amount of pictures in the folder
+let picsNo = 3;    // total amount of pictures in the folder
 
 
 // sentences parts
@@ -37,6 +37,9 @@ function readAllPics() {
 
   if(current < picsNo) {
     img = loadImage("pics/" + current + ".jpg", onImageReady); // callback
+  } else {
+    current = 0;    // restart the counter
+    //readAllPics(); // restart with generation
   }
 
 }
@@ -51,7 +54,7 @@ function onImageReady() {
   classifier = ml5.imageClassifier('MobileNet', 'topk: 3', modelLoaded); // load classifier
   imageReady = true;
   
-  document.getElementById('showimage').src = pic;
+  //document.getElementById('showimage').src = pic;
   charRNN = ml5.charRNN('./models/woolf/', modelTextLoaded);
   
 }
@@ -114,7 +117,12 @@ function gotData(err, result) {
 
     currSent = '<span style="background: linear-gradient(' + color + ', ' + color + ')">' + currSent + ". </span>";
 
-    sentencesArray.push(currSent);
+    // at the beginning add new sentenses to the array beacuse still not populated
+    if(sentencesArray.length < current) {
+      sentencesArray.push(currSent);
+    } else {
+      sentencesArray[current] = currSent;   // than change the phrases
+    }
 
     console.log(currSent);
 
