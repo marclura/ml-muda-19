@@ -41,15 +41,13 @@ function onResult(error, result) {
   generateText();
 }
 
-
-
 function modelTextLoaded() {
   modelReady = true;
 }
 
 function generateText() {
   
-  input = "the " + labels[1];  // get the firs label from the label array
+  input = "the experience about " + labels[4];  // get the first label from the label array
   //input = "the meaning of life is";
   
   console.log(input);
