@@ -24,7 +24,7 @@ function setup() {
 function onImageReady() {
   classifier = ml5.imageClassifier('MobileNet', 'topk: 3', modelLoaded); // load classifier
   imageReady = true;
-  charRNN = ml5.charRNN('./models/bolano/', modelTextLoaded);
+  charRNN = ml5.charRNN('./models/shakespeare/', modelTextLoaded);
   
 }
 
