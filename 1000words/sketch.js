@@ -11,6 +11,10 @@ let sentences;
 let classifier, charRNN;
 let labels;
 
+let senStart = ["this", "the", "your"];
+let senVerb = ["is", "looks", "is truly", "is really"];
+let senAdj = ["great", "super", "good", "very good","good","wow","WOW","cool","GREAT","magnificent", "magical","very cool","stylish","beautiful","so beautiful","so stylish","so professional","lovely","so lovely","very lovely","glorious","so glorious","very glorious","adorable","excellent","amazing"];
+
 
 function setup() {
   createCanvas(400, 400);
@@ -20,7 +24,7 @@ function setup() {
 function onImageReady() {
   classifier = ml5.imageClassifier('MobileNet', 'topk: 3', modelLoaded); // load classifier
   imageReady = true;
-  charRNN = ml5.charRNN('./models/woolf/', modelTextLoaded);
+  charRNN = ml5.charRNN('./models/bolano/', modelTextLoaded);
   
 }
 
@@ -46,8 +50,10 @@ function modelTextLoaded() {
 }
 
 function generateText() {
-  
-  input = "the experience about " + labels[4];  // get the first label from the label array
+
+  console.log("senStart.length " + Math.floor(Math.random()*senStart.length));
+
+  input = senStart[Math.floor(Math.random()*senStart.length)] + " " + senAdj[Math.floor(Math.random()*senAdj.length)] + " " + labels[4].trim() + " " + senVerb[Math.floor(Math.random()*senVerb.length)];  // get the first label from the label array
   //input = "the meaning of life is";
   
   console.log(input);
