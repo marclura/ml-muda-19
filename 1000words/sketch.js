@@ -111,9 +111,17 @@ function gotData(err, result) {
     textReady = true;
 
 
+    /*
+    // Version inline pictures
     let image = '<div class="images" style="background: url(\'pics\/' + current + '.jpg\') no-repeat center center"></div>';
     let changedLabel = image + '<span class="label">' + currentLabel + "</span>";
     let currSent = sentences[0];
+    */
+
+    let changedLabel = '<span class="label">' + currentLabel + "</span>";
+    let currSent = sentences[0];
+
+
 
     currSent = currSent.replace(currentLabel, changedLabel);  // add class selector to only the label inside the sentence.
 
@@ -152,6 +160,8 @@ function pageUpdate() {
 
   console.log(finalHtml);
 
+  let image = '<div class="images" style="background: url(\'pics\/' + current + '.jpg\') no-repeat center center"></div>';
+  select('#gallery').html(select('#gallery').html() + image);   // get the current content of the #gallery div and add the next picture to it and set the html with updated content
   select('#sentence').html(finalHtml.toLowerCase());
 
   current += 1;

@@ -20,7 +20,7 @@
     <meta charset="utf-8" />
     <style>
     body {
-      padding: 1rem;
+      padding: 1vw;
     }
     h1  {text-align: left;}
     div { 
@@ -34,22 +34,39 @@
       /* padding: 0.2rem 0; */
     } 
 
-    #container {
-      padding-left: 30%;
-    }
-
     .images {
+      /*  for inline pictures with the text
       position: absolute;
-      transform: translate(0%, -4.8rem); /* same as line height */
+      transform: translate(0%, -4.8rem); 
       left: 1rem;
       width: 20vw;
       height: 20vw;
       max-width: 200px;
       max-height: 200px;
+      */
+      display: inline-block;
+      width: 6vw;
+      height: 6vw;
       -webkit-background-size: cover !important;
       -moz-background-size: cover !important;
       -o-background-size: cover !important;
       background-size: cover !important;
+    }
+
+    #container {
+      display: flex;
+
+    }
+
+    #gallery {
+      width: 25vw;
+      display: flex;
+      justify-content: space-between;
+      margin-right: 2vw;
+    }
+
+    #sentence {
+      width: 71vw;
     }
 
     .label {
@@ -72,6 +89,7 @@
     <div>
     <script src="sketch.js"></script>
     <div id="container">
+      <div id="gallery"></div>
       <div id="sentence"></div>
     </div>
   </div>
