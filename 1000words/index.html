@@ -35,11 +35,16 @@
       }
       h1  {
         text-align: left;
-        margin-bottom: 8rem;
+        margin-bottom: 0rem;
         font-family: 'Roboto Mono', monospace;
         font-size: 6rem;
       }
-      div { 
+      header {
+        margin-bottom: 7rem;
+      }
+      header p {
+        margin-top: 0;
+        margin-left: 10px;
       }
       span {
         text-align: left;
@@ -48,7 +53,15 @@
         font-weight: bold;
         line-height: 4.8rem;
         /* padding: 0.2rem 0; */
-      } 
+      }
+      a:link, a:hover, a:visited, a:hover {
+        color: balck;
+        text-decoration: none;
+      }
+      footer {
+        top: 3rem;
+        width: 80%;
+      }
 
       .images {
         /*  for inline pictures with the text
@@ -73,7 +86,7 @@
 
       #container {
         display: flex;
-
+        margin-bottom: 6rem;
       }
 
       #gallery {
@@ -104,17 +117,21 @@
   </head>
   <body>
 
-    <h1>dIAry</h1>
-    <div>
     <script src="sketch.js"></script>
     <script src="interaction.js"></script>
+
+    <header>
+      <h1>dIAry</h1>
+      <p id="about">turns pictures into stories</p>
+    </header>
+    <div>
+
     <div id="container">
       <div id="gallery"></div>
       <div id="sentence"></div>
     </div>
-    <div id="project">
-      <p id="about">the photo diary that turns into </p>
-</p></div>
-    </div>
+    <footer>
+      <p id="about"><a href="https://github.com/marclura/ml-muda-19/tree/master/1000words" target="_blank">About</a></p>
+    </footer>
   </body>
 </html>
