@@ -21,6 +21,7 @@ let sentencesArray = [];  // all sentences
 // images reader
 let current = 0;    // current pic
 let picsNo = 10;    // total amount of pictures in the folder
+let allPicsDone = false;
 
 
 // sentences parts
@@ -31,8 +32,14 @@ let senAdj = ["great", "horrible", "good", "very good","good","cool","great","ma
 
 function setup() {
   createCanvas(0, 0);
+  Math.seedrandom(" " + Date.now()); // change the seed randomly for the Math.random() function
+  //generateAboutDiary();
   readAllPics();
   colorH = Math.floor(Math.random()*360);
+}
+
+function generateAboutDiary() {   // generate quote
+
 }
 
 function readAllPics() {
@@ -40,16 +47,12 @@ function readAllPics() {
   if(current < picsNo) {
     img = loadImage("pics/" + current + ".jpg", onImageReady); // callback
   } else {
+    //addEvetListeners(); // to all the sentences to make with the pics interactive
+    allPicsDone = true;
     current = 0;    // restart the counter
-    //readAllPics(); // restart with generation
+    readAllPics(); // restart with generation
   }
 
-}
-
-function randomPic() {
-  pic = "pics/travel" + Math.floor(Math.random()*4) + ".jpg";
-  console.log(pic);
-  return pic;
 }
 
 function onImageReady() {
@@ -135,7 +138,7 @@ function gotData(err, result) {
     let color = "hsl(" + colorH + ", 100%, 75%)";
 
     //currSent = '<span style="background: linear-gradient(' + color + ', ' + color + ')">' + currSent + ". </span>";
-    currSent = '<span style="background: ' + color  + '">' + currSent + ". </span>";
+    currSent = '<span id="s' + current + '" style="background: ' + color  + '">' + currSent + ". </span>";
 
     // at the beginning add new sentenses to the array beacuse still not populated
     if(sentencesArray.length < current) {
@@ -160,8 +163,10 @@ function pageUpdate() {
 
   console.log(finalHtml);
 
-  let image = '<div class="images" style="background: url(\'pics\/' + current + '.jpg\') no-repeat center center"></div>';
-  select('#gallery').html(select('#gallery').html() + image);   // get the current content of the #gallery div and add the next picture to it and set the html with updated content
+  if(!allPicsDone) {
+    let image = '<div id="' + current + '" class="images" style="background: url(\'pics\/' + current + '.jpg\') no-repeat center center"></div>';
+    select('#gallery').html(select('#gallery').html() + image);   // get the current content of the #gallery div and add the next picture to it and set the html with updated content
+  }
   select('#sentence').html(finalHtml.toLowerCase());
 
   current += 1;
