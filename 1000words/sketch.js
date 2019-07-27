@@ -10,6 +10,7 @@ let sentences;
 let pics;
 let pic;
 let currentLabel;
+let colorH;   // to keep track of colors
 
 let classifier, charRNN;
 let labels;
@@ -23,14 +24,15 @@ let picsNo = 10;    // total amount of pictures in the folder
 
 
 // sentences parts
-let senStart = ["this", "the", "your"];
+let senStart = ["this", "the", "your", "his", "her"];
 let senVerb = ["is"];
-let senAdj = ["great", "super", "good", "very good","good","wow","cool","great","magnificent", "magical","very cool","stylish","beautiful","so beautiful","so stylish","so professional","lovely","so lovely","very lovely","glorious","so glorious","very glorious","adorable","excellent","amazing"];
+let senAdj = ["great", "horrible", "good", "very good","good","cool","great","magnificent", "magical","very great","stylish","beautiful","so beautiful","so professional","lovely","so lovely","very lovely","glorious","so glorious","very glorious","adorable","excellent","amazing"];
 
 
 function setup() {
   createCanvas(0, 0);
   readAllPics();
+  colorH = Math.floor(Math.random()*360);
 }
 
 function readAllPics() {
@@ -39,7 +41,7 @@ function readAllPics() {
     img = loadImage("pics/" + current + ".jpg", onImageReady); // callback
   } else {
     current = 0;    // restart the counter
-    readAllPics(); // restart with generation
+    //readAllPics(); // restart with generation
   }
 
 }
@@ -108,12 +110,21 @@ function gotData(err, result) {
     sentences = txt.split('.');   // split the long string text into array of sentences that ends with the '.'
     textReady = true;
 
-    let changedLabel = '<span class="label">' + currentLabel + "</span>";
+
+    let image = '<div class="images" style="background: url(\'pics\/' + current + '.jpg\') no-repeat center center"></div>';
+    let changedLabel = image + '<span class="label">' + currentLabel + "</span>";
     let currSent = sentences[0];
 
     currSent = currSent.replace(currentLabel, changedLabel);  // add class selector to only the label inside the sentence.
 
-    let color = "hsl(" + Math.floor(Math.random()*360) + ", 100%, 75%)";
+    // color generator: pick next a bit far from the previous to have good combination of them
+    colorH += Math.floor(20+Math.random()*30);
+
+    if(colorH > 360) colorH -= 360; // if bigger than 360 (out of range of HSL)
+
+    console.log("colorH: " + colorH);
+
+    let color = "hsl(" + colorH + ", 100%, 75%)";
 
     //currSent = '<span style="background: linear-gradient(' + color + ', ' + color + ')">' + currSent + ". </span>";
     currSent = '<span style="background: ' + color  + '">' + currSent + ". </span>";
